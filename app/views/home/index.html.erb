@@ -22,3 +22,12 @@
     dp.init(scheduler);
     dp.setTransactionMode("GET", false);
 </script>
+
+<% if current_client %>
+
+<%= link_to "A client", url_for(controller: :home, action: :index, client_id: 4), method: :get %>
+
+<%= link_to "Logout",destroy_client_session_path,method: :delete %>
+
+
+<% end %>

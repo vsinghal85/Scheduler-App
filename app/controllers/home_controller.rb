@@ -1,10 +1,12 @@
 class HomeController < ApplicationController
+  before_action :authenticate_client!
+
   def index
   end
 
 
  def data
-   events = Event.all
+   events = current_client.events.all
 
    render :json => events.map {|event| {
               :id => event.id,
@@ -33,6 +35,8 @@ class HomeController < ApplicationController
        event = Event.create :start_date => start_date, :end_date => end_date, :text => text,
                             :rec_type => rec_type, :event_length => event_length, :event_pid => event_pid
        tid = event.id
+       event.client_id=current_client.id
+       event.save
        if rec_type == 'none'
          mode = 'deleted'
        end
@@ -54,6 +58,7 @@ class HomeController < ApplicationController
        if rec_type != ''
          Event.where(event_pid: id).destroy_all
        end
+     
        event = Event.find(id)
        event.start_date = start_date
        event.end_date = end_date
