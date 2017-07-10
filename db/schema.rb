@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709111317) do
+ActiveRecord::Schema.define(version: 20170710042244) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -36,9 +36,10 @@ ActiveRecord::Schema.define(version: 20170709111317) do
     t.string   "rec_type"
     t.integer  "event_length"
     t.integer  "event_pid"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "client_id"
+    t.string   "event_location"
     t.index ["client_id"], name: "index_events_on_client_id"
   end
 

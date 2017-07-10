@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="./codebase/ext/dhtmlxscheduler_map_view.js"></script>

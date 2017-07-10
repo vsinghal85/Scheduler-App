@@ -1,3 +1,5 @@
+
+
 <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:800px;'>
  <div class="dhx_cal_navline">
    <div class="dhx_cal_prev_button">&nbsp;</div>
@@ -7,6 +9,8 @@
    <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
    <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+<div class="dhx_cal_tab" name="map_tab" style="right:280px;"></div>
+
  </div>
  <div class="dhx_cal_header">
  </div>
@@ -14,8 +18,23 @@
  </div>
 </div>
 
-<script>
+<%= render 'google' %>
+<%= render 'mapview' %>
+
+
+<script >
+
+//scheduler.locale.labels.map_tab = "Map";
+//scheduler.locale.labels.section_location = "Location";
+scheduler.config.lightbox.sections=[    
+   {name:"description", height:50,map_to:"text", type:"textarea", focus:true},
+   /* adding new textarea */
+   {name:"location", height:43, map_to:"event_location", type:"textarea"},
+   {name:"time", height:72, type:"time", map_to:"auto"}    
+];
+ 
     scheduler.config.xml_date="%Y-%m-%d %H:%i";
+   // scheduler.init('scheduler_here',new Date(2013,8,1),"Map");
     scheduler.init("scheduler_here");
     scheduler.load("<%= data_path %>", "json");
     var dp = new dataProcessor("<%= db_action_path %>");
@@ -25,7 +44,7 @@
 
 <% if current_client %>
 
-<%= link_to "A client", url_for(controller: :home, action: :index, client_id: 4), method: :get %>
+<%= link_to "A client", url_for(controller: :home, action: :data, client_id: 4), method: :get %>
 
 <%= link_to "Logout",destroy_client_session_path,method: :delete %>
 
