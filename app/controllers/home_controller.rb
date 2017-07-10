@@ -10,6 +10,11 @@ class HomeController < ApplicationController
   
    events = current_client.events.all
 
+   if(params[:param1]!=nil)
+    client=Client.find(params[:param1])
+    events=client.events.all
+  end
+
    render :json => events.map {|event| {
 
               :id => event.id,

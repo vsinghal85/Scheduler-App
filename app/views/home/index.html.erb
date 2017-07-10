@@ -36,7 +36,7 @@ scheduler.config.lightbox.sections=[
     scheduler.config.xml_date="%Y-%m-%d %H:%i";
    // scheduler.init('scheduler_here',new Date(2013,8,1),"Map");
     scheduler.init("scheduler_here");
-    scheduler.load("<%= data_path %>", "json");
+    scheduler.load("<%= data_path(:param1 => @client) %>", "json");
     var dp = new dataProcessor("<%= db_action_path %>");
     dp.init(scheduler);
     dp.setTransactionMode("GET", false);
@@ -44,7 +44,7 @@ scheduler.config.lightbox.sections=[
 
 <% if current_client %>
 
-<%= link_to "A client", url_for(controller: :home, action: :data, client_id: 4), method: :get %>
+<%= link_to "A client", url_for(controller: :home, action: :index, client_id: 1), method: :get %>
 
 <%= link_to "Logout",destroy_client_session_path,method: :delete %>
 
