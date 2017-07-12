@@ -14,5 +14,20 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="./codebase/ext/dhtmlxscheduler_map_view.js"></script>
+
+
+function show_minical(){
+    if (scheduler.isCalendarVisible()){
+        scheduler.destroyCalendar();
+    } else {
+        scheduler.renderCalendar({
+            position:"dhx_minical_icon",
+            date:scheduler._date,
+            navigation:true,
+            handler:function(date,calendar){
+                scheduler.setCurrentView(date);
+                scheduler.destroyCalendar()
+            }
+        });
+    }
+}
