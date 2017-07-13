@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :authenticate_client!
+  
 
   def index
     @client=params[:client_id]
@@ -7,8 +7,13 @@ class HomeController < ApplicationController
 
 
  def data
-  
+
+  if current_client!=nil
    events = current_client.events.all
+  end
+  if current_teacher!=nil
+    events = current_teacher.events.all
+   end 
 
    if(params[:param1]!=nil)
     client=Client.find(params[:param1])
@@ -24,8 +29,8 @@ class HomeController < ApplicationController
               :rec_type => event.rec_type,
               :event_length => event.event_length,
               :event_pid => event.event_pid,
-               :event_location => event.event_location
-             
+               :event_location => event.event_location,
+              :teacher_id => event.teacher_id
           }}
  end
 
@@ -41,14 +46,16 @@ class HomeController < ApplicationController
    event_pid = params['event_pid']
    tid = id
    event_location = params[:event_location]
-
+   teacher_id =params[:teacher_id]
    case mode
      when 'inserted'
        event = Event.create :start_date => start_date, :end_date => end_date, :text => text,
-                            :rec_type => rec_type, :event_length => event_length, :event_pid => event_pid, :event_location => event_location
+                            :rec_type => rec_type, :event_length => event_length, :event_pid => event_pid, :event_location => event_location, :teacher_id => teacher_id
        tid = event.id
+      if !current_teacher && current_client
        event.client_id=current_client.id
        event.save
+     end
        if rec_type == 'none'
          mode = 'deleted'
        end
@@ -61,7 +68,9 @@ class HomeController < ApplicationController
        if event_pid != 0 and event_pid != ''
          event = Event.find(id)
          event.rec_type = 'none'
+         if !current_teacher && current_client
          event.save
+       end
        else
          Event.find(id).destroy
        end
@@ -79,7 +88,10 @@ class HomeController < ApplicationController
        event.event_length = event_length
        event.event_pid = event_pid
        event.event_location =event_location
+       event.teacher_id = teacher_id
+       if !current_teacher && current_client
        event.save
+     end
    end
 
    render :json => {

@@ -27,14 +27,25 @@
 <%= render 'minical'%>
 <%= render 'agenda' %>
 <%= render 'year'%>
+<%= render 'multiselect'%>
 <script >
+
+scheduler.serverList("teacher_id",[
+  <% Teacher.all.each do |teacher| %>
+  {key: <%= teacher.id %>, label: "<%= teacher.email %>"},
+  
+  <% end %>
+])
 
 scheduler.locale.labels.map_tab = "Map";
 scheduler.locale.labels.section_location = "Location";
 scheduler.config.lightbox.sections=[    
    {name:"description", height:50,map_to:"text", type:"textarea", focus:true},
+
    /* adding new textarea */
    {name:"location", height:43, map_to:"event_location", type:"textarea"},
+   { name:"Select Teacher", height:22, map_to:"teacher_id", type:"multiselect", 
+    options: scheduler.serverList("teacher_id"), vertical:"false" },
     {name:"recurring", height:115, type:"recurring", map_to:"rec_type", 
         button:"recurring"},
    {name:"time", height:72, type:"calendar_time", map_to:"auto"}    
@@ -54,6 +65,15 @@ scheduler.config.lightbox.sections=[
 <%= link_to "A client", url_for(controller: :home, action: :index, client_id: 1), method: :get %>
 
 <%= link_to "Logout",destroy_client_session_path,method: :delete %>
+
+
+<% end %>
+
+<% if current_teacher %>
+
+<%= link_to "A client", url_for(controller: :home, action: :index, client_id: 1), method: :get %>
+
+<%= link_to "Logout",destroy_teacher_session_path,method: :delete %>
 
 
 <% end %>

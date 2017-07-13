@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :teachers
   devise_for :clients
  root :to => 'home#index'
 match "home/data", :to => "home#data", :as => "data", :via => "get"
