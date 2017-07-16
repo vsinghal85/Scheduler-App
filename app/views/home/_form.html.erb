@@ -1,0 +1,6 @@
+<%= form_tag home_create_path(:event_id=>@event,:method=>"post") do %>
+  <%= text_field_tag "location" %>
+  <%= number_field_tag "Teacher_Id"%>
+  <%= hidden_field_tag :event_id, @event %>
+  <%= submit_tag "Save" %>
+<% end %>

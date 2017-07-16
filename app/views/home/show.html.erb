@@ -1,0 +1,28 @@
+<% @events.all.each do |event| %>
+  <br><p>
+  <strong>Event Name  :</strong>
+  <%= event.text %>
+  <br>
+  <br><p>
+  <strong>Event start date  :</strong>
+  <%= event.start_date %>
+  <br>
+  <br><p>
+  <strong>Event End Date :</strong>
+  <%= event.end_date %>
+  <br>
+  <br>
+    <%if event.teacher_id==nil %>
+   <td><%= link_to "Add Details", :controller=>'home',:action=>'new',:event_id=>event.id  %><td>
+    <% else %>
+    <p> Location  <%= event.event_location %><p>
+    <p> Teacher's Id  <%= event.teacher_id %><p>
+    <%end%>
+<% end %>
+  <%= link_to "Back to Map",root_path %>
+  
+</p>
+
+
+
+

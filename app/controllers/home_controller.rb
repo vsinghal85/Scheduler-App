@@ -2,9 +2,36 @@ class HomeController < ApplicationController
   
 
   def index
+
+  if current_client==nil && current_teacher==nil
+   redirect_to new_client_session_path
+  end
+
     @client=params[:client_id]
   end
 
+def new
+@event=params[:event_id]  
+end
+
+def create
+
+@events=Event.find(params[:event_id])
+@events.teacher_id=params[:Teacher_Id]
+@events.event_location=params[:location]
+@events.save
+
+
+ redirect_to home_show_path
+end
+
+ def show
+ @events=nil
+ if current_client
+@events=current_client.events.all   
+ end
+
+ end
 
  def data
 
